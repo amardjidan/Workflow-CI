@@ -46,17 +46,11 @@ jobs:
       - name: Build Docker Image
         run: |
           cd MLProject
-          # Cari model artifact
-          MODEL_PATH=$(find mlruns -type d -name "model" | head -1)
-          echo "Model path: ${MODEL_PATH}"
-          
-          # Build docker image
-          docker build -t ${{ secrets.DOCKER_USERNAME }}/mlflow-model:latest MLProject/
+          docker build -t ${{ secrets.DOCKER_USERNAME }}/mlflow-model:latest .
 
       - name: Push Docker Image to Docker Hub
         run: |
           docker push ${{ secrets.DOCKER_USERNAME }}/mlflow-model:latest
-          echo "Docker image pushed: https://hub.docker.com/r/${{ secrets.DOCKER_USERNAME }}/mlflow-model"
 
       - name: Save Docker Hub URL
         run: |
